@@ -25,19 +25,14 @@ public:
     
     void userEvent(ofxOpenNIUserEvent & event);
     
-    int i,j;
-    
 	ofxOpenNI openNIDevice;
     float theta1,theta2;
-    float xle,yle,xlh,ylh,xre,yre,xrh,yrh,xtor,ytor;
-    float xlt[4],ylt[4],xrt[4],yrt[4];
-    float dl1,dl2,dl3,dl4,dl5,dl6,dl7,dr1,dr2,dr3,dr4,dr5,dr6,dr7;
-    float cl1,sl1,cl2,sl2,cr1,sr1,cr2,sr2;
+    float x0,y0,x1,y1,x2,y2,x3,y3,xe,ye,xe1,ye1,xh,yh;
+    float d1,d2;
+    float c1,s1,c2,s2,c3,s3,c4,s4;
     float l1,l2;
     float angle1,angle2;
-    float pl,pr; //adjustment of the size of the sword
-    float theta[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    
+    float p; //adjustment of the size of the sword
     
     ofTrueTypeFont verdana;
     ofSoundPlayer sound;
