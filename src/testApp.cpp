@@ -38,7 +38,6 @@ void testApp::setup() {
 //--------------------------------------------------------------
 void testApp::update(){
     openNIDevice.update();
-    
 }
 
 //--------------------------------------------------------------
@@ -68,10 +67,15 @@ void testApp::draw(){
         ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
        
 
-
-        if (numUsers==2 && counter ==2) {
+        /*give up draw Mask
+        if (numUsers==2 && (counter2 - counter) < -1) {
             user.drawMask();
         }
+            counter2 = counter;
+        
+        if(user.isSkeleton()){
+            counter = counter +1;
+        };*/
 
         //extract heart
         xh = ((user.getJoint(JOINT_LEFT_SHOULDER).getProjectivePosition().x)+(user.getJoint(JOINT_RIGHT_SHOULDER).getProjectivePosition().x))*0.5;
@@ -117,7 +121,10 @@ void testApp::draw(){
         if(y0<y1){
             if(d1<50){
                 sound.play();
-                ofCircle(xh-x1,yh-y1,60);
+                ofCircle(xh-x1,yh-y1,30);
+                if(xh<320){
+                    scoreR = scoreR +20;
+                }else{scoreL = scoreL + 20;}
             }else{}
             ofLine(0, 0,xe-x1,ye-y1);
 
@@ -132,6 +139,9 @@ void testApp::draw(){
             if(d1<50){
                 ofCircle(xh-x1,yh-y1,30);
                 sound.play();
+                if(xh<320){
+                    scoreR = scoreR +20;
+                }else{scoreL = scoreL + 20;}
             }else{}
             
             ofLine(0, 0,xe-x1,ye-y1);
@@ -184,10 +194,10 @@ void testApp::draw(){
     
     // draw some info regarding frame counts etc
 	
-    ofSetColor(0, 255, 0);
-	string msg = " users: " + ofToString(numUsers) + " counter: " + ofToString(counter);
+    ofSetColor(240, 0, 0);
+	string msg = " scoreL: " + ofToString(scoreL) + " scoreR: " + ofToString(scoreR);
     
-	verdana.drawString(msg, 20, openNIDevice.getNumDevices() * 480 - 20);
+	verdana.drawString(msg, 170, openNIDevice.getNumDevices() * 80 - 20);
     
 }
 

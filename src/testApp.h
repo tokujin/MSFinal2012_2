@@ -33,7 +33,8 @@ public:
     float l1,l2;
     float angle1,angle2;
     float p; //adjustment of the size of the sword
-    int counter;
+    int counter=0, counter2 =0;
+    int scoreL=0, scoreR=0;
     
     ofTrueTypeFont verdana;
     ofSoundPlayer sound;
