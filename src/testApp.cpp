@@ -38,6 +38,7 @@ void testApp::setup() {
 //--------------------------------------------------------------
 void testApp::update(){
     openNIDevice.update();
+    
 }
 
 //--------------------------------------------------------------
@@ -57,15 +58,21 @@ void testApp::draw(){
     // get number of current users
     int numUsers = openNIDevice.getNumTrackedUsers();
     
+//    ofSetColor(ofRandom(220,240));
+    
     ofSetColor(ofRandom(240,255), 139, 212);
-    
-    
     // iterate through users
     for (int i = 0; i < numUsers; i++){
         
         // get a reference to this user
         ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
-        
+       
+
+
+        if (numUsers==2 && counter ==2) {
+            user.drawMask();
+        }
+
         //extract heart
         xh = ((user.getJoint(JOINT_LEFT_SHOULDER).getProjectivePosition().x)+(user.getJoint(JOINT_RIGHT_SHOULDER).getProjectivePosition().x))*0.5;
         yh =  ((user.getJoint(JOINT_LEFT_SHOULDER).getProjectivePosition().y)+(user.getJoint(JOINT_RIGHT_SHOULDER).getProjectivePosition().y))*0.5;
@@ -135,6 +142,8 @@ void testApp::draw(){
             ofBezier(0 , -32*p, -24*p, -24*p, -24*p, 24*p, 0, 32*p);
             ofEndShape();
             ofPopMatrix();
+            
+            
         }
         ofPopMatrix();
         
@@ -159,6 +168,7 @@ void testApp::draw(){
         //ofTranslate(320, 240, 10);
         user.drawPointCloud();
         
+        
         // you can also access the mesh:
         
         // MESH REFERENCE
@@ -175,7 +185,7 @@ void testApp::draw(){
     // draw some info regarding frame counts etc
 	
     ofSetColor(0, 255, 0);
-	string msg = " xe: " + ofToString(xe);
+	string msg = " users: " + ofToString(numUsers) + " counter: " + ofToString(counter);
     
 	verdana.drawString(msg, 20, openNIDevice.getNumDevices() * 480 - 20);
     
