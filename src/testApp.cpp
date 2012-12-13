@@ -30,20 +30,30 @@ void testApp::setup() {
     //    openNIDevice.setBaseUserClass(user);
     
     //load image
-    image.loadImage("fencing.png");
-    sound.loadSound("sounds/orgolM.wav");
+    image.loadImage("fencing5.png");
+    sound1.loadSound("sounds/orgolM.wav");
+    sound2.loadSound("sounds/Swing.wav");
     verdana.loadFont(ofToDataPath("verdana.ttf"), 12);
+    scoreL=0, scoreR=0;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
     openNIDevice.update();
+    ofPoint velocity(xe - oldX, ye - oldY);
+    oldX = xe;
+    oldY = ye;
+    V = sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
+    velo = int(V);
+    if(V>80){
+        sound2.play();
+    }
+        
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	ofSetColor(255, 255, 255);
-    
+	ofSetColor(255, 255, 255);    
     
     ofPushMatrix();
     // draw debug (ie., image, depth, skeleton)
@@ -54,6 +64,9 @@ void testApp::draw(){
     // use a blend mode so we can see 'through' the mask(s)
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     
+    image.draw(0,160);
+
+    
     // get number of current users
     int numUsers = openNIDevice.getNumTrackedUsers();
     
@@ -62,7 +75,11 @@ void testApp::draw(){
     ofSetColor(ofRandom(240,255), 139, 212);
     // iterate through users
     for (int i = 0; i < numUsers; i++){
+        if(numUsers == 0){
+            image.draw(0,160);
+        }else{image.clear();}
         
+        image.clear();
         // get a reference to this user
         ofxOpenNIUser & user = openNIDevice.getTrackedUser(i);
        
@@ -81,12 +98,16 @@ void testApp::draw(){
         xh = ((user.getJoint(JOINT_LEFT_SHOULDER).getProjectivePosition().x)+(user.getJoint(JOINT_RIGHT_SHOULDER).getProjectivePosition().x))*0.5;
         yh =  ((user.getJoint(JOINT_LEFT_SHOULDER).getProjectivePosition().y)+(user.getJoint(JOINT_RIGHT_SHOULDER).getProjectivePosition().y))*0.5;
         
+        ofSetColor(220,0,0);
+        ofCircle(xh, yh, 20);
+        
         
         //extract joint position left
         x0 = user.getJoint(JOINT_LEFT_ELBOW).getProjectivePosition().x;
         y0 = user.getJoint(JOINT_LEFT_ELBOW).getProjectivePosition().y;
         x1 = user.getJoint(JOINT_LEFT_HAND).getProjectivePosition().x;
         y1 = user.getJoint(JOINT_LEFT_HAND).getProjectivePosition().y;
+        
         
         
         l1 = ofDist(x0,y0,x1,y1);
@@ -111,6 +132,8 @@ void testApp::draw(){
             xe1 = x1 + l1 * c2 * 2.2;
             ye1 = x1 + l1 * s2 * 2.2;
         }
+
+
         
         p = l1/100;        
         
@@ -120,11 +143,11 @@ void testApp::draw(){
         ofSetLineWidth(3);
         if(y0<y1){
             if(d1<50){
-                sound.play();
+                sound1.play();
                 ofCircle(xh-x1,yh-y1,30);
                 if(xh<320){
-                    scoreR = scoreR +20;
-                }else{scoreL = scoreL + 20;}
+                    scoreR = scoreR +V;
+                }else{scoreL = scoreL + V;}
             }else{}
             ofLine(0, 0,xe-x1,ye-y1);
 
@@ -138,10 +161,10 @@ void testApp::draw(){
         else{
             if(d1<50){
                 ofCircle(xh-x1,yh-y1,30);
-                sound.play();
+                sound1.play();
                 if(xh<320){
-                    scoreR = scoreR +20;
-                }else{scoreL = scoreL + 20;}
+                    scoreR = scoreR +V;
+                }else{scoreL = scoreL + V;}
             }else{}
             
             ofLine(0, 0,xe-x1,ye-y1);
@@ -195,9 +218,9 @@ void testApp::draw(){
     // draw some info regarding frame counts etc
 	
     ofSetColor(240, 0, 0);
-	string msg = " scoreL: " + ofToString(scoreL) + " scoreR: " + ofToString(scoreR);
+	string msg = "Score 7th Ave: " + ofToString(scoreL) + "  Score 8th Ave: " + ofToString(scoreR) ;
     
-	verdana.drawString(msg, 170, openNIDevice.getNumDevices() * 80 - 20);
+	verdana.drawString(msg, 70, openNIDevice.getNumDevices() * 80 - 20);
     
 }
 
