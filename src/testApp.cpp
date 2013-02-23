@@ -33,6 +33,7 @@ void testApp::setup() {
     image.loadImage("fencing5.png");
     sound1.loadSound("sounds/orgolM.wav");
     sound2.loadSound("sounds/Swing.wav");
+    sound3.loadSound("sounds/Swords.wav");
     verdana.loadFont(ofToDataPath("verdana.ttf"), 12);
     scoreL=0, scoreR=0;
 }
@@ -48,6 +49,7 @@ void testApp::update(){
     if(V>80){
         sound2.play();
     }
+
         
 }
 
@@ -75,6 +77,7 @@ void testApp::draw(){
     ofSetColor(ofRandom(240,255), 139, 212);
     // iterate through users
     for (int i = 0; i < numUsers; i++){
+        
         if(numUsers == 0){
             image.draw(0,160);
         }else{image.clear();}
@@ -119,6 +122,7 @@ void testApp::draw(){
         s2 = sin(2*PI - theta1);
         
         d1 = ofDist(xe,ye,xh,yh);
+        d2 = ofDist(xe, ye, xe1, ye1);
         
         //x-coordinate, y-coordinate, tip of sword
         if (y0<y1) {
@@ -133,7 +137,9 @@ void testApp::draw(){
             ye1 = x1 + l1 * s2 * 2.2;
         }
 
-
+        if (d2<20) {
+            sound3.play();
+        }else{}
         
         p = l1/100;        
         
@@ -218,7 +224,7 @@ void testApp::draw(){
     // draw some info regarding frame counts etc
 	
     ofSetColor(240, 0, 0);
-	string msg = "Score 7th Ave: " + ofToString(scoreL) + "  Score 8th Ave: " + ofToString(scoreR) ;
+	string msg = "Score 8th Ave: " + ofToString(scoreL) + "  Score 9th Ave: " + ofToString(scoreR) ;
     
 	verdana.drawString(msg, 70, openNIDevice.getNumDevices() * 80 - 20);
     

@@ -28,7 +28,7 @@ public:
 	ofxOpenNI openNIDevice;
     float theta1,theta2;
     float x0,y0,x1,y1,x2,y2,x3,y3,xe,ye,xe1,ye1,xh,yh,oldX, oldY, V=0;
-    float d1,d2;
+    float d1,d2,d3,d4,d5;
     float vx=0,vy;
     float c1,s1,c2,s2,c3,s3,c4,s4;
     float l1,l2;
@@ -38,7 +38,7 @@ public:
     int scoreL, scoreR, velo;
     
     ofTrueTypeFont verdana;
-    ofSoundPlayer sound1, sound2;
+    ofSoundPlayer sound1, sound2,sound3;
     
 };
 
