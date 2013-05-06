@@ -36,10 +36,17 @@ void testApp::setup() {
     sound3.loadSound("sounds/Swords.wav");
     verdana.loadFont(ofToDataPath("verdana.ttf"), 12);
     scoreL=0, scoreR=0;
+    
+    
+//    video.loadMovie("mov/BG_VID2.mov");
+//    video.play();
+
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+
+//    video.update();
     openNIDevice.update();
     ofPoint velocity(xe - oldX, ye - oldY);
     oldX = xe;
@@ -56,6 +63,10 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	ofSetColor(255, 255, 255);    
+    
+    
+//    video.draw(0,0,ofGetWidth(),ofGetHeight());
+
     
     ofPushMatrix();
     // draw debug (ie., image, depth, skeleton)

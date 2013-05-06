@@ -40,6 +40,8 @@ public:
     ofTrueTypeFont verdana;
     ofSoundPlayer sound1, sound2,sound3;
     
+//    ofVideoPlayer video;
+    
 };
 
 #endif
